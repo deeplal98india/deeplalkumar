@@ -34,7 +34,7 @@ const HeroImage = () => {
   };
 
   return (
-    <div className="relative flex w-full items-start justify-center lg:justify-end lg:pt-4">
+    <div className="relative flex w-full items-start justify-center lg:justify-end lg:-mt-12 xl:-mt-16">
       {/* Glow */}
       <div className="absolute top-10 h-[340px] w-[340px] rounded-full bg-cyan-500/20 blur-[90px]" />
 

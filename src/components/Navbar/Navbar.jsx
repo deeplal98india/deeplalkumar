@@ -68,17 +68,17 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[max-height] duration-500 ease-in-out ${
         scrolled
           ? "border-b border-white/10 bg-slate-950/70 shadow-2xl backdrop-blur-3xl"
           : "bg-gradient-to-b from-slate-950/70 to-transparent"
       }`}
     >
-      <div className="mx-auto flex h-[88px] w-full max-w-[1920px] items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="mx-auto flex h-[72px] sm:h-[78px] lg:h-[88px] w-full max-w-[1920px] items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
         {/* LEFT - Logo (slightly right) */}
-        <div className="w-[290px] flex-shrink-0 lg:translate-x-4">
+        <div className="flex min-w-0 flex-1 lg:w-[290px] lg:flex-shrink-0 lg:flex-none lg:translate-x-4">
           <a href="#home" className="group flex items-center gap-4">
-            <div className="relative h-14 w-14 overflow-hidden rounded-full border border-cyan-400/30 bg-slate-900 shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:border-cyan-400 group-hover:shadow-[0_0_30px_rgba(34,211,238,.35)]">
+            <div className="relative h-11 w-11 sm:h-12 sm:w-12 lg:h-14 lg:w-14 overflow-hidden rounded-full border border-cyan-400/30 bg-slate-900 shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:border-cyan-400 group-hover:shadow-[0_0_30px_rgba(34,211,238,.35)]">
               <img
                 src={dkLogo}
                 alt="Deeplal Kumar"
@@ -88,12 +88,12 @@ export default function Navbar() {
             </div>
 
             <div className="leading-tight">
-              <h1 className="text-[22px] font-extrabold tracking-tight text-white">
+              <h1 className="text-lg sm:text-xl lg:text-[22px] font-extrabold tracking-tight text-white">
                 Deeplal Kumar
                 <span className="text-cyan-400">.</span>
               </h1>
 
-              <p className="mt-1 text-[11px] uppercase tracking-[0.25em] text-slate-400">
+              <p className="mt-0.5 hidden sm:block text-[11px] uppercase tracking-[0.25em] text-slate-400">
                 Software Engineer
               </p>
             </div>
@@ -133,15 +133,15 @@ export default function Navbar() {
 
         {/* RIGHT - Clock (slightly left) */}
         <div className="hidden w-[290px] flex-shrink-0 justify-end lg:flex lg:-translate-x-4">
-          <div className="flex w-[260px] items-center gap-4 rounded-2xl border border-cyan-500/20 bg-white/[0.05] px-4 py-3 shadow-[0_10px_35px_rgba(0,0,0,.35)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/40 hover:shadow-[0_0_25px_rgba(34,211,238,.18)]">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10">
+          <div className="flex w-[260px] items-center gap-4 rounded-2xl border border-cyan-500/20 bg-white/[0.05] px-4 py-3 shadow-[0_10px_35px_rgba(0,0,0,.35)] backdrop-blur-2xl transition-all duration-300 hover:border-cyan-400/40 hover:shadow-[0_0_25px_rgba(34,211,238,.18)]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-500/10 shadow-[0_0_18px_rgba(34,211,238,.15)]">
               <FaRegClock className="text-xl text-cyan-400" />
             </div>
 
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-slate-500">
-                🇮🇳 INDIA
-              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cyan-200 drop-shadow-[0_0_8px_rgba(103,232,249,0.45)]">
+  🇮🇳 INDIA
+</span>
 
               <span className="font-mono text-lg font-bold tabular-nums text-white">
                 {currentTime}
@@ -155,27 +155,28 @@ export default function Navbar() {
         </div>
 
         {/* MOBILE TOGGLE */}
-        <div className="ml-auto lg:hidden">
+        <div className="flex flex-none items-center justify-end lg:hidden">
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-500/10"
-          >
-            {menuOpen ? (
-              <FaTimes className="text-xl" />
-            ) : (
-              <FaBars className="text-xl" />
-            )}
-          </button>
+  onClick={() => setMenuOpen(!menuOpen)}
+  aria-label="Toggle navigation menu"
+  className="group flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-500/20 bg-slate-900/70 text-white shadow-lg backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/10 active:scale-95"
+>
+  {menuOpen ? (
+    <FaTimes className="text-[20px] transition-transform duration-300 group-hover:rotate-90" />
+  ) : (
+    <FaBars className="text-[20px]" />
+  )}
+</button>
         </div>
       </div>
 
       {/* MOBILE MENU */}
       <div
         className={`overflow-hidden transition-all duration-500 lg:hidden ${
-          menuOpen ? "max-h-screen" : "max-h-0"
+          menuOpen ? "max-h-[650px]" : "max-h-0"
         }`}
       >
-        <div className="border-t border-white/10 bg-slate-950/90 px-6 py-6 backdrop-blur-3xl">
+        <div className="border-t border-white/10 bg-slate-950/90 px-5 py-5 backdrop-blur-3xl">
           <ul className="space-y-2">
             {navLinks.map((item) => (
               <li key={item.id}>
@@ -185,11 +186,11 @@ export default function Navbar() {
                     setActiveSection(item.href.substring(1));
                     setMenuOpen(false);
                   }}
-                  className={`block rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${
-                    activeSection === item.href.substring(1)
-                      ? "bg-cyan-500/10 text-cyan-400"
-                      : "text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-400"
-                  }`}
+                  className={`flex items-center rounded-2xl px-5 py-4 text-[15px] font-medium transition-all duration-300 ${
+  activeSection === item.href.substring(1)
+    ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
+    : "border border-transparent text-slate-300 hover:border-cyan-500/20 hover:bg-cyan-500/10 hover:text-cyan-400"
+}`}
                 >
                   {item.title}
                 </a>
@@ -199,7 +200,7 @@ export default function Navbar() {
 
           <div className="my-6 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
 
-          <div className="flex items-center gap-4 rounded-3xl border border-cyan-500/20 bg-white/[0.05] p-4 backdrop-blur-xl">
+          <div className="flex items-center gap-4 rounded-2xl border border-cyan-500/20 bg-white/[0.05] p-5 backdrop-blur-xl">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10">
               <FaRegClock className="text-2xl text-cyan-400" />
             </div>
