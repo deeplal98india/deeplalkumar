@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Eye } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import resume from "../../assets/resume/resume.pdf";
+import useVisitorCount from "../../hooks/useVisitorCount";
 
 const HeroContent = () => {
+  const visitorCount = useVisitorCount();
   const socialLinks = [
     {
       icon: FaGithub,
@@ -31,6 +33,11 @@ const HeroContent = () => {
     {
       value: "100%",
       label: "Dedication",
+    },
+    {
+      value: visitorCount || 0,
+      label: "Visitors",
+      icon: Eye,
     },
   ];
 
@@ -140,7 +147,7 @@ const HeroContent = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="mt-14 grid w-full max-w-xl grid-cols-3 gap-5"
+        className="mt-14 grid w-full max-w-2xl grid-cols-2 gap-5 sm:grid-cols-4"
       >
         {stats.map((item, index) => (
           <motion.div
@@ -174,7 +181,13 @@ hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
           >
             {/* Value */}
 
-            <h3 className="text-3xl font-extrabold text-white">{item.value}</h3>
+            <div className="flex items-center justify-center gap-2">
+              {item.icon && <item.icon size={22} className="text-cyan-400" />}
+
+              <h3 className="text-3xl font-extrabold text-white">
+                {item.value}
+              </h3>
+            </div>
 
             {/* Label */}
 
