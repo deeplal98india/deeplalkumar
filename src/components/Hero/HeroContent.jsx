@@ -56,24 +56,23 @@ const HeroContent = () => {
   lg:text-left
 "
     >
-      {/* Badge */}
+<motion.div
+  initial={{ opacity: 0, y: -15 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.15 }}
+  className="mb-8 inline-flex items-center rounded-full border border-emerald-400/20 bg-white/[0.05] px-5 py-2.5 backdrop-blur-xl shadow-[0_8px_25px_rgba(16,185,129,.12)]"
+>
+  {/* Online Indicator */}
+  <span className="relative flex h-3.5 w-3.5 flex-shrink-0">
+    <span className="absolute h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+    <span className="relative h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(74,222,128,.95)]" />
+  </span>
 
-      <motion.div
-        initial={{ opacity: 0, y: -15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15 }}
-        className="mb-7 inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-white/[0.05] px-5 py-2 backdrop-blur-xl"
-      >
-        <span className="relative flex h-4 w-4">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70"></span>
-
-          <span className="relative inline-flex h-4 w-4 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(74,222,128,.8)]"></span>
-        </span>
-
-        <span className="text-sm font-semibold tracking-wide text-slate-200">
-          Available for Full-Time
-        </span>
-      </motion.div>
+  {/* Text */}
+  <span className="bg-gradient-to-r from-white via-slate-100 to-cyan-300 bg-clip-text text-sm font-semibold tracking-wide text-transparent">
+    Open to Full-Time Opportunities
+  </span>
+</motion.div>
 
       {/* Greeting */}
 
