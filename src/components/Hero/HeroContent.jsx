@@ -215,20 +215,20 @@ hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
             inline-flex
             items-center
             overflow-hidden
-            rounded-2xl
+            rounded-[10px]
             bg-gradient-to-r
             from-cyan-500
             via-sky-500
             to-cyan-600
             px-7
-            py-4
+            py-6
             font-semibold
             text-white
             shadow-[0_15px_40px_rgba(6,182,212,.35)]
             transition-all
             duration-500
-            hover:-translate-y-1.5
-            hover:scale-[1.02]
+            hover:-translate-y-1
+            hover:scale-[1]
             hover:shadow-[0_25px_55px_rgba(6,182,212,.55)]
           "
         >
@@ -277,20 +277,20 @@ hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
             inline-flex
             items-center
             overflow-hidden
-            rounded-2xl
+            rounded-[10px]
             border
             border-white/10
             bg-white/[0.05]
             px-7
-            py-4
+            py-6
             font-semibold
             text-white
             backdrop-blur-2xl
             shadow-[0_10px_30px_rgba(0,0,0,.25)]
             transition-all
             duration-500
-            hover:-translate-y-1.5
-            hover:scale-[1.02]
+            hover:-translate-y-1
+            hover:scale-[1]
             hover:border-cyan-400/50
             hover:shadow-[0_20px_45px_rgba(34,211,238,.20)]
           "
