@@ -171,56 +171,93 @@ export default function Navbar() {
       </div>
 
       {/* MOBILE MENU */}
-      <div
-        className={`overflow-hidden transition-all duration-500 lg:hidden ${
-          menuOpen ? "max-h-[650px]" : "max-h-0"
-        }`}
+      {/* ================= MOBILE DRAWER ================= */}
+
+<>
+  {/* Overlay */}
+  <div
+    onClick={() => setMenuOpen(false)}
+    className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+      menuOpen
+        ? "pointer-events-auto opacity-100"
+        : "pointer-events-none opacity-0"
+    }`}
+  />
+
+  {/* Drawer */}
+  <div
+    className={`fixed right-0 top-0 z-50 flex h-screen w-[320px] max-w-[85vw] flex-col border-l border-white/10 bg-slate-950/95 shadow-2xl backdrop-blur-3xl transition-transform duration-500 ease-out lg:hidden ${
+      menuOpen ? "translate-x-0" : "translate-x-full"
+    }`}
+  >
+    {/* Header */}
+    <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+      <div>
+        <h3 className="text-xl font-bold text-white">
+          Deeplal Kumar
+        </h3>
+
+        <p className="mt-1 text-xs uppercase tracking-[0.3em] text-cyan-400">
+          Navigation
+        </p>
+      </div>
+
+      <button
+        onClick={() => setMenuOpen(false)}
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-cyan-400 hover:bg-cyan-500/10"
       >
-        <div className="border-t border-white/10 bg-slate-950/90 px-5 py-5 backdrop-blur-3xl">
-          <ul className="space-y-2">
-            {navLinks.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={item.href}
-                  onClick={() => {
-                    setActiveSection(item.href.substring(1));
-                    setMenuOpen(false);
-                  }}
-                  className={`flex items-center rounded-2xl px-5 py-4 text-[15px] font-medium transition-all duration-300 ${
-  activeSection === item.href.substring(1)
-    ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-    : "border border-transparent text-slate-300 hover:border-cyan-500/20 hover:bg-cyan-500/10 hover:text-cyan-400"
-}`}
-                >
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <FaTimes />
+      </button>
+    </div>
 
-          <div className="my-6 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+    {/* Links */}
+    <div className="flex-1 overflow-y-auto px-5 py-6">
+      <ul className="space-y-3">
+        {navLinks.map((item) => (
+          <li key={item.id}>
+            <a
+              href={item.href}
+              onClick={() => {
+                setActiveSection(item.href.substring(1));
+                setMenuOpen(false);
+              }}
+              className={`block rounded-2xl px-5 py-4 text-[15px] font-medium transition-all duration-300 ${
+                activeSection === item.href.substring(1)
+                  ? "border border-cyan-500/30 bg-cyan-500/10 text-cyan-400"
+                  : "border border-transparent text-slate-300 hover:border-cyan-500/20 hover:bg-cyan-500/10 hover:text-cyan-400"
+              }`}
+            >
+              {item.title}
+            </a>
+          </li>
+        ))}
+      </ul>
 
-          <div className="flex items-center gap-4 rounded-2xl border border-cyan-500/20 bg-white/[0.05] p-5 backdrop-blur-xl">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10">
-              <FaRegClock className="text-2xl text-cyan-400" />
-            </div>
+      <div className="my-6 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
 
-            <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-slate-500">
-                Local Time
-              </span>
+      {/* Clock */}
+      <div className="flex items-center gap-4 rounded-2xl border border-cyan-500/20 bg-white/[0.05] p-5 backdrop-blur-xl">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10">
+          <FaRegClock className="text-2xl text-cyan-400" />
+        </div>
 
-              <span className="font-mono text-xl font-bold text-white">
-                {currentTime}
-              </span>
+        <div>
+          <span className="text-[10px] uppercase tracking-[0.25em] text-cyan-300">
+            Local Time
+          </span>
 
-              <span className="text-sm text-slate-400">
-                UTC +05:30 • {currentDate}
-              </span>
-            </div>
+          <div className="font-mono text-xl font-bold text-white">
+            {currentTime}
+          </div>
+
+          <div className="text-sm text-slate-400">
+            UTC +05:30 • {currentDate}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</>
     </header>
   );
 }
