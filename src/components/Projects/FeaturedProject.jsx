@@ -8,21 +8,23 @@ export default function FeaturedProject({ project }) {
   if (!project) return null;
 
   return (
-    <motion.div
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 60 }}
-      whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      whileHover={
-        shouldReduceMotion
-          ? {}
-          : {
-              y: -6,
-              scale: 1.005,
-            }
-      }
-      className="group relative z-10 mb-20 overflow-hidden rounded-lg border-2 border-[#1f1f1f] bg-[#111111] transition-all duration-500 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,.18)]"
-    >
+<motion.div
+  initial={shouldReduceMotion ? false : { opacity: 0, y: 60 }}
+  whileInView={
+    shouldReduceMotion ? {} : { opacity: 1, y: 0 }
+  }
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  whileHover={
+    shouldReduceMotion
+      ? {}
+      : {
+          y: -6,
+          scale: 1.005,
+        }
+  }
+  className="group relative z-10 w-full overflow-hidden rounded-lg border-2 border-[#1f1f1f] bg-[#111111] transition-all duration-500 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,.18)]"
+>
       <div className="grid items-center gap-6 lg:grid-cols-2">
         {/* Left */}
         <div className="relative h-[280px] lg:h-[300px] overflow-hidden border-r border-[#1f1f1f]">

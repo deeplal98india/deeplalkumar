@@ -21,6 +21,14 @@ export const skills = [
     color: "#61DAFB",
   },
   {
+    name: "React Native",
+    icon: FaReact,
+    percentage: 88,
+    level: "Advanced",
+    category: "Mobile Development",
+    color: "#61DAFB",
+  },
+  {
     name: "JavaScript",
     icon: SiJavascript,
     percentage: 92,

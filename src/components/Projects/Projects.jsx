@@ -75,11 +75,19 @@ export default function Projects() {
 
         {/* Featured Projects */}
 
-        <div className="space-y-14">
-          {featuredProjects.map((project) => (
-            <FeaturedProject key={project.id} project={project} />
-          ))}
-        </div>
+        <div className="w-full">
+  {featuredProjects.map((project, index) => (
+    <div
+      key={project._id}
+      style={{
+        marginBottom: index === 0 ? "16px" : "0px",
+        position: "relative",
+      }}
+    >
+      <FeaturedProject project={project} />
+    </div>
+  ))}
+</div>
 
         {/* Other Projects */}
         <div className="h-4" />
