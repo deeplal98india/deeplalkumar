@@ -6,13 +6,12 @@ import {
   FaMobileAlt,
   FaRocket,
   FaCode,
-  FaArrowRight,
 } from "react-icons/fa";
 
 const services = [
   {
-    title: "Frontend",
-    desc: "Modern React applications with React.js, Tailwind CSS and responsive UI focused on performance and user experience.",
+    title: "Web & Mobile Development",
+    desc: "Modern web and mobile applications using React.js, React Native, Tailwind CSS and responsive UI focused on performance and user experience.",
     icon: FaLaptopCode,
     color: "#22D3EE",
   },
@@ -30,19 +29,19 @@ const services = [
   },
   {
     title: "Responsive UI",
-    desc: "Pixel-perfect responsive interfaces that work seamlessly across desktop, tablet and mobile.",
+    desc: "Pixel-perfect interfaces that work seamlessly across desktop, tablet and mobile devices with a consistent user experience.",
     icon: FaMobileAlt,
     color: "#F59E0B",
   },
   {
     title: "Performance",
-    desc: "Fast loading, optimized and scalable web applications built with modern best practices.",
+    desc: "Fast loading, optimized and scalable web and mobile applications built with modern development best practices.",
     icon: FaRocket,
     color: "#8B5CF6",
   },
   {
     title: "Clean Code",
-    desc: "Maintainable, reusable and production-ready architecture following industry standards.",
+    desc: "Maintainable, reusable and production-ready architecture following clean coding principles and industry standards.",
     icon: FaCode,
     color: "#3B82F6",
   },
@@ -50,9 +49,8 @@ const services = [
 
 export default function AboutServices() {
   return (
-    <section className="mt-24">
+    <section>
       {/* Heading */}
-
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -63,21 +61,25 @@ export default function AboutServices() {
         <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-[4px] text-cyan-400">
           SERVICES
         </span>
+
         <div className="h-2" />
 
-        <h3 className="mt-6 text-4xl font-bold text-white">What I Do</h3>
+        <h3 className="mt-6 text-4xl font-bold text-white">
+          What I Do
+        </h3>
+
         <div className="h-2" />
 
         <p className="mt-6 text-center text-lg text-slate-400">
-          I build scalable, secure and high-performance MERN Stack applications
-          with modern UI, optimized backend architecture and clean code
-          practices.
+          I build scalable, secure and high-performance web and mobile
+          applications using modern technologies, optimized backend
+          architecture and clean code practices.
         </p>
       </motion.div>
+
       <div className="h-4" />
 
       {/* Cards */}
-
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {services.map((item, index) => {
           const Icon = item.icon;
@@ -95,10 +97,25 @@ export default function AboutServices() {
               whileHover={{
                 y: -6,
               }}
-              className="group relative flex h-full flex-col overflow-hidden rounded-lg border-2 border-[#1f1f1f] bg-[#0b0b0b] p-6 transition-all duration-300 hover:border-cyan-400 hover:shadow-[0_0_25px_rgba(34,211,238,0.25)]"
+              className="
+                group
+                relative
+                flex
+                h-full
+                flex-col
+                overflow-hidden
+                rounded-lg
+                border-2
+                border-[#1f1f1f]
+                bg-[#0b0b0b]
+                p-6
+                transition-all
+                duration-300
+                hover:border-cyan-400
+                hover:shadow-[0_0_25px_rgba(34,211,238,0.25)]
+              "
             >
               {/* Background Glow */}
-
               <div
                 className="absolute -right-20 -top-20 h-48 w-48 rounded-full blur-3xl opacity-10 transition-all duration-500 group-hover:opacity-30"
                 style={{
@@ -108,7 +125,6 @@ export default function AboutServices() {
 
               <div className="relative z-10">
                 {/* Icon */}
-
                 <div
                   className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg border transition-all duration-300 group-hover:scale-110"
                   style={{
@@ -121,13 +137,11 @@ export default function AboutServices() {
                 </div>
 
                 {/* Title */}
-
                 <h3 className="text-xl font-semibold text-white">
                   {item.title}
                 </h3>
 
                 {/* Description */}
-
                 <p className="mt-4 text-sm leading-7 text-slate-400">
                   {item.desc}
                 </p>

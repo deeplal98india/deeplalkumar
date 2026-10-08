@@ -41,25 +41,24 @@ export default function AboutStats() {
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
       className="
-  w-full
-max-w-none
-min-h-fit
-  relative
-  overflow-visible
-  rounded-[10px]
-  border
-  border-white/10
-  bg-gradient-to-br
-  from-slate-900/90
-  via-slate-900/70
-  to-slate-950/90
-  p-10
-  backdrop-blur-3xl
-  shadow-[0_25px_80px_rgba(0,0,0,.45)]
-"
+        relative
+        min-h-fit
+        w-full
+        max-w-none
+        overflow-visible
+        rounded-[10px]
+        border
+        border-white/10
+        bg-gradient-to-br
+        from-slate-900/90
+        via-slate-900/70
+        to-slate-950/90
+        p-10
+        shadow-[0_25px_80px_rgba(0,0,0,.45)]
+        backdrop-blur-3xl
+      "
     >
       {/* Background Glow */}
-
       <div className="absolute -left-28 top-12 h-72 w-72 rounded-full bg-cyan-500/10 blur-[140px]" />
 
       <div className="absolute -right-28 bottom-0 h-72 w-72 rounded-full bg-violet-500/10 blur-[140px]" />
@@ -78,31 +77,32 @@ min-h-fit
           ACHIEVEMENTS
         </span>
       </div>
+
       <div className="h-4" />
 
       {/* Heading */}
-
       <h2 className="mt-7 text-5xl font-black leading-none text-white">
         Quick
         <span className="mt-2 block bg-gradient-to-r from-cyan-300 via-sky-400 to-violet-500 bg-clip-text text-transparent">
           Overview
         </span>
       </h2>
+
       <div className="h-4" />
 
       {/* Description */}
-
       <p className="mt-6 text-[15px] leading-8 text-slate-400">
         Software Developer with{" "}
         <span className="font-semibold text-cyan-300">1+ Years</span> of
-        professional experience building enterprise web applications using
-        React.js, Node.js, Express.js and MongoDB. Passionate about clean
-        architecture, scalable development and modern user experiences.
+        professional experience building enterprise web and mobile
+        applications using React.js, React Native, Node.js, Express.js and
+        MongoDB. Passionate about clean architecture, scalable development
+        and modern user experiences.
       </p>
+
       <div className="h-6" />
 
       {/* Stats Grid */}
-
       <div className="mt-10 grid grid-cols-2 gap-7">
         {stats.map((item, index) => {
           const Icon = item.icon;
@@ -129,83 +129,65 @@ min-h-fit
                 y: -4,
               }}
               className="
-group
-relative
-overflow-hidden
-flex
-min-h-[160px]
-flex-col
-justify-start
-rounded-2xl
-border
-border-slate-700/50
-bg-gradient-to-br
-from-slate-900
-via-slate-900
-to-slate-950
-p-6
-transition-all
-duration-300
-hover:-translate-y-1
-hover:border-cyan-400
-hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
-"
+                group
+                relative
+                flex
+                min-h-[160px]
+                flex-col
+                justify-start
+                overflow-hidden
+                rounded-2xl
+                border
+                border-slate-700/50
+                bg-gradient-to-br
+                from-slate-900
+                via-slate-900
+                to-slate-950
+                p-6
+                transition-all
+                duration-300
+                hover:-translate-y-1
+                hover:border-cyan-400
+                hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
+              "
             >
               {/* Icon */}
-
               <div
                 className="
-mb-6
-flex
-h-16
-w-16
-items-center
-justify-center
-rounded-2xl
-border
-border-cyan-400/20
-bg-cyan-400/10
-text-3xl
-text-cyan-400
-"
+                  mb-6
+                  flex
+                  h-16
+                  w-16
+                  items-center
+                  justify-center
+                  rounded-2xl
+                  border
+                  border-cyan-400/20
+                  bg-cyan-400/10
+                  text-3xl
+                  text-cyan-400
+                "
                 style={{
                   borderColor: item.color,
                   background: `${item.color}15`,
                 }}
               >
-                <Icon size={28} color={item.color} />
+                <Icon />
               </div>
 
               {/* Title */}
-
-              <h4
-                className="
-                  mt-3
-                  text-2xl
-                  font-bold
-                  text-white
-                "
-              >
+              <h4 className="mt-3 text-2xl font-bold text-white">
                 {item.title}
               </h4>
 
               {/* Description */}
-
-              <p
-                className="
-                  mt-2
-                  text-sm
-leading-7
-                  text-slate-400
-                "
-              >
+              <p className="mt-2 text-sm leading-7 text-slate-400">
                 {item.description}
               </p>
             </motion.div>
           );
         })}
       </div>
-      <div className="h-6" />
 
       {/* Bottom Premium Card */}
       <motion.div
@@ -240,11 +222,13 @@ leading-7
 
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-bold text-white">Current Focus</h3>
+            <h3 className="text-xl font-bold text-white">
+              Current Focus
+            </h3>
 
             <p className="mt-2 text-sm leading-7 text-slate-400">
-              Building scalable enterprise applications using modern frontend
-              and backend technologies.
+              Building scalable enterprise web and mobile applications using
+              modern frontend, backend and mobile technologies.
             </p>
           </div>
 
@@ -257,11 +241,17 @@ leading-7
         <div className="h-2" />
 
         <div className="mt-7 flex flex-wrap gap-3">
-          {["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs"].map(
-            (skill) => (
-              <span
-                key={skill}
-                className="
+          {[
+            "React.js",
+            "React Native",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "REST APIs",
+          ].map((skill) => (
+            <span
+              key={skill}
+              className="
                 rounded-full
                 border
                 border-cyan-400/20
@@ -277,11 +267,10 @@ leading-7
                 hover:border-cyan-400/40
                 hover:bg-cyan-500/20
               "
-              >
-                {skill}
-              </span>
-            ),
-          )}
+            >
+              {skill}
+            </span>
+          ))}
         </div>
 
         {/* Divider */}
@@ -290,7 +279,6 @@ leading-7
         <div className="my-7 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         {/* Footer */}
-
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <span className="relative flex h-3.5 w-3.5">
@@ -305,7 +293,7 @@ leading-7
               </p>
 
               <p className="text-xs text-slate-500">
-                Full Stack Developer • Software Developer
+                Full Stack Developer • React Native Developer
               </p>
             </div>
           </div>
@@ -313,7 +301,6 @@ leading-7
       </motion.div>
 
       {/* Decorative Border */}
-
       <div
         className="
           pointer-events-none

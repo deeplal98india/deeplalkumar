@@ -17,6 +17,11 @@ const highlights = [
     color: "#61DAFB",
   },
   {
+    title: "React Native",
+    icon: FaReact,
+    color: "#61DAFB",
+  },
+  {
     title: "Node.js",
     icon: FaNodeJs,
     color: "#68A063",
@@ -50,13 +55,11 @@ const highlights = [
 
 export default function AboutHighlights() {
   return (
-    <section className="relative overflow-visible py-28">
+    <section className="relative overflow-hidden py-24">
       {/* Background Glow */}
-
       <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
 
       {/* Heading */}
-
       <motion.div
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -67,14 +70,13 @@ export default function AboutHighlights() {
         <p className="font-semibold uppercase tracking-[8px] text-cyan-400">
           TECHNOLOGIES
         </p>
-        <div className="h-1" />
 
-        <h2 className="mt-3 text-5xl font-extrabold text-white">Tech Stack</h2>
-        <div className="h-6" />
+        <h2 className="mt-3 text-5xl font-extrabold text-white">
+          Tech Stack
+        </h2>
       </motion.div>
 
       {/* Tech Cards */}
-
       <div className="overflow-visible py-4">
         <Marquee
           speed={35}
@@ -87,34 +89,34 @@ export default function AboutHighlights() {
             const Icon = tech.icon;
 
             return (
-              <div key={index} className="px-5">
+              <div key={`${tech.title}-${index}`} className="px-5">
                 <motion.div
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.3 }}
                   className="
-      group
-      relative
-      flex
-      h-[220px]
-      w-[200px]
-      flex-col
-      items-center
-      justify-center
-      overflow-hidden
-      rounded-2xl
-      border
-      border-slate-700/50
-      bg-gradient-to-br
-      from-slate-900
-      via-slate-900
-      to-slate-950
-      p-6
-      transition-all
-      duration-300
-      hover:-translate-y-1
-      hover:border-cyan-400
-      hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
-    "
+                    group
+                    relative
+                    flex
+                    h-[220px]
+                    w-[200px]
+                    flex-col
+                    items-center
+                    justify-center
+                    overflow-hidden
+                    rounded-2xl
+                    border
+                    border-slate-700/50
+                    bg-gradient-to-br
+                    from-slate-900
+                    via-slate-900
+                    to-slate-950
+                    p-6
+                    transition-all
+                    duration-300
+                    hover:-translate-y-1
+                    hover:border-cyan-400
+                    hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
+                  "
                 >
                   {/* Glow */}
                   <div
