@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import About from "./components/About/About";
@@ -7,20 +9,59 @@ import Experience from "./components/Experience/Experience";
 import Footer from "./components/Footer/Footer";
 import BackgroundEffects from "./components/Hero/BackgroundEffects";
 
+const THEME_KEY = "portfolio-theme";
+
+function getInitialTheme() {
+  try {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    return savedTheme === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
+}
+
 export default function App() {
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    // Apply theme globally so CSS variables and theme selectors work.
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
+
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // Theme remains functional for the current session.
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) =>
+      currentTheme === "dark" ? "light" : "dark"
+    );
+  };
+
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#030712]">
-      {/* Global Background */}
+    <div
+      className="portfolio-root relative min-h-screen overflow-x-hidden"
+      data-theme={theme}
+    >
       <BackgroundEffects />
 
-      {/* Portfolio Content */}
       <div className="relative z-10">
-        <Navbar />
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Contact />
+        <Navbar
+          theme={theme}
+          onToggleTheme={toggleTheme}
+        />
+
+        <main>
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <Contact />
+        </main>
+
         <Footer />
       </div>
     </div>

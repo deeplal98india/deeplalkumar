@@ -15,8 +15,13 @@ export default function ContactInfo() {
         />
       ))}
 
+      {/* Response Time Card */}
       <ContactCard
-        icon={() => <span className="text-2xl leading-none">⚡</span>}
+        icon={() => (
+          <span className="text-2xl leading-none" aria-hidden="true">
+            ⚡
+          </span>
+        )}
         title="Response Time"
         value="< 24 Hours"
         subtitle="Usually replies within one business day."

@@ -7,38 +7,35 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="relative overflow-hidden py-20 md:py-24"
+      className="relative isolate overflow-hidden bg-slate-50 py-16 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-20 md:py-24"
     >
       {/* Background Glow */}
+      <div className="pointer-events-none absolute -left-10 top-10 -z-10 h-64 w-64 rounded-full bg-cyan-500/10 blur-[120px] sm:h-72 sm:w-72 sm:blur-[140px]" />
 
-      <div className="absolute left-0 top-10 h-72 w-72 rounded-full bg-cyan-500/10 blur-[140px]" />
-
-      <div className="absolute right-0 bottom-10 h-72 w-72 rounded-full bg-violet-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute -right-10 bottom-10 -z-10 h-64 w-64 rounded-full bg-violet-500/10 blur-[120px] sm:h-72 sm:w-72 sm:blur-[140px]" />
 
       {/* Grid Pattern */}
-
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.04] dark:opacity-[0.06]"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)
+            linear-gradient(rgba(15,23,42,.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(15,23,42,.12) 1px, transparent 1px)
           `,
           backgroundSize: "40px 40px",
         }}
       />
 
       {/* Content */}
-
-      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-4 md:px-8 xl:px-10">
+      <div className="relative z-10 mx-auto w-full max-w-[1800px] px-4 sm:px-6 md:px-8 xl:px-10">
         <ExperienceHeader />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="mt-16"
+          className="mt-10 sm:mt-12 md:mt-16"
         >
           <ExperienceTimeline />
         </motion.div>
