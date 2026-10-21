@@ -1,24 +1,293 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
 @import "tailwindcss";
 
-:root {
-  color-scheme: dark;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+/* Tailwind dark: classes follow the portfolio theme toggle */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Portfolio design tokens */
+@theme {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-figtree: "Figtree", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #0091da;
+  --color-primary-dark: #4db8ff;
+  --color-secondary: #00695c;
+  --color-secondary-dark: #33a598;
+
+  --color-bg-light: #f5f6f8;
+  --color-bg-dark: #0e1c2f;
+  --color-surface-light: #ffffff;
+  --color-surface-dark: #1b2a41;
+
+  --color-text-primary-light: #1e293b;
+  --color-text-primary-dark: #e2e8f0;
+  --color-text-secondary-light: #475569;
+  --color-text-secondary-dark: #94a3b8;
+
+  --color-border-light: #e0e6ed;
+  --color-border-dark: #2a3b54;
+
+  --breakpoint-window: 1500px;
+  --breakpoint-desktop: 1440px;
+  --breakpoint-1350: 1350px;
+}
+
+/* Base reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-  background: #020617;
-  color: #f8fafc;
+  background: var(--background, #020617);
+  color: var(--text, #f8fafc);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
-body { margin: 0; min-width: 320px; min-height: 100vh; background: #020617; color: #f8fafc; }
-#root { min-height: 100vh; width: 100%; }
-img { max-width: 100%; }
-::selection { color: #f8fafc; background: rgba(6, 182, 212, 0.3); }
-:focus-visible { outline: 2px solid #22d3ee; outline-offset: 3px; }
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+img {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+::selection {
+  color: #ffffff;
+  background: #0091da;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-light, #22d3ee);
+  outline-offset: 3px;
+}
+
+/* Theme-aware page shell */
+.portfolio-root {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+/* LIGHT MODE */
+[data-theme="light"] body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme="light"] .portfolio-root {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Main backgrounds */
+[data-theme="light"] .portfolio-root .bg-slate-950,
+[data-theme="light"] .portfolio-root .bg-slate-900,
+[data-theme="light"] .portfolio-root .bg-slate-900\/90,
+[data-theme="light"] .portfolio-root .bg-\[\#030712\],
+[data-theme="light"] .portfolio-root .bg-\[\#020617\],
+[data-theme="light"] .portfolio-root .bg-\[\#050816\],
+[data-theme="light"] .portfolio-root .bg-\[\#0f172a\] {
+  background-color: #f8fafc;
+}
+
+/* Cards and secondary surfaces */
+[data-theme="light"] .portfolio-root .bg-slate-800,
+[data-theme="light"] .portfolio-root .bg-slate-800\/50,
+[data-theme="light"] .portfolio-root .bg-slate-700,
+[data-theme="light"] .portfolio-root .bg-slate-900\/50 {
+  background-color: #ffffff;
+}
+
+/* Text contrast */
+[data-theme="light"] .portfolio-root .text-white,
+[data-theme="light"] .portfolio-root .text-slate-100,
+[data-theme="light"] .portfolio-root .text-slate-200,
+[data-theme="light"] .portfolio-root .text-gray-100,
+[data-theme="light"] .portfolio-root .text-gray-200 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .portfolio-root .text-slate-300,
+[data-theme="light"] .portfolio-root .text-gray-300 {
+  color: #334155;
+}
+
+[data-theme="light"] .portfolio-root .text-slate-400,
+[data-theme="light"] .portfolio-root .text-slate-500,
+[data-theme="light"] .portfolio-root .text-gray-400,
+[data-theme="light"] .portfolio-root .text-gray-500 {
+  color: #475569;
+}
+
+/* Borders */
+[data-theme="light"] .portfolio-root .border-slate-800,
+[data-theme="light"] .portfolio-root .border-slate-700,
+[data-theme="light"] .portfolio-root .border-slate-600 {
+  border-color: #e2e8f0;
+}
+
+/* Cyan accent text */
+[data-theme="light"] .portfolio-root .text-cyan-300,
+[data-theme="light"] .portfolio-root .text-cyan-400 {
+  color: #0e7490;
+}
+
+/* Primary buttons */
+[data-theme="light"] .portfolio-root .bg-cyan-500 {
+  background-color: #0091da;
+  color: #ffffff;
+}
+
+[data-theme="light"] .portfolio-root .bg-cyan-600 {
+  background-color: #007caf;
+  color: #ffffff;
+}
+
+[data-theme="light"] .portfolio-root .bg-cyan-700 {
+  background-color: #00658f;
+  color: #ffffff;
+}
+
+/* Light mode hero heading */
+[data-theme="light"] .portfolio-root #home h1 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .portfolio-root #home h1 span {
+  color: #0e7490;
+}
+
+/* Subtle card shadows */
+[data-theme="light"] .portfolio-root .shadow-lg,
+[data-theme="light"] .portfolio-root .shadow-xl {
+  --tw-shadow-color: rgb(15 23 42 / 8%);
+}
+
+/* Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+[data-theme="dark"] * {
+  scrollbar-color: #475569 #0f172a;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Responsive safety */
+@media (max-width: 640px) {
+  .portfolio-root {
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  .portfolio-root img {
+    max-width: 100%;
+  }
+
+  .portfolio-root h1 {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

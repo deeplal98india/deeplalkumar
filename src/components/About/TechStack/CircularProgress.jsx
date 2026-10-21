@@ -6,11 +6,13 @@ export default function CircularProgress({
   strokeWidth = 10,
   color = "#22d3ee",
 }) {
+  const safePercentage = Math.min(100, Math.max(0, Number(percentage) || 0));
+
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
   const offset =
-    circumference - (percentage / 100) * circumference;
+    circumference - (safePercentage / 100) * circumference;
 
   return (
     <div
@@ -25,18 +27,21 @@ export default function CircularProgress({
         height={size}
         viewBox={`0 0 ${size} ${size}`}
         className="-rotate-90"
+        role="img"
+        aria-label={`Skill level ${safePercentage}%`}
       >
         {/* Background Ring */}
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(255,255,255,0.08)"
+          stroke="currentColor"
           strokeWidth={strokeWidth}
           fill="transparent"
+          className="text-slate-200 dark:text-white/10"
         />
 
-        {/* Animated Ring */}
+        {/* Animated Progress Ring */}
         <motion.circle
           cx={size / 2}
           cy={size / 2}
@@ -54,6 +59,7 @@ export default function CircularProgress({
           }}
           viewport={{
             once: true,
+            amount: 0.3,
           }}
           transition={{
             duration: 1.8,
@@ -81,11 +87,14 @@ export default function CircularProgress({
         }}
         className="absolute text-center"
       >
-        <h3 className="text-2xl font-bold text-white">
-          {percentage}%
+        <h3
+          className="text-2xl font-bold text-slate-900 transition-colors duration-300 dark:text-white"
+          style={{ fontSize: size >= 120 ? "1.5rem" : "1.25rem" }}
+        >
+          {safePercentage}%
         </h3>
 
-        <p className="text-xs uppercase tracking-widest text-slate-400">
+        <p className="mt-1 text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 sm:text-xs">
           Skill
         </p>
       </motion.div>

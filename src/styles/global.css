@@ -1,10 +1,239 @@
 @import "./theme.css";
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: var(--background); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; overflow-x: hidden; }
-img { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; }
-section[id] { scroll-margin-top: 5rem; }
-.container { width: min(1200px, 92%); margin-inline: auto; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+::selection {
+  color: var(--text);
+  background: rgba(8, 145, 178, 0.2);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 3px;
+}
+
+/* Theme-aware page shell */
+.portfolio-root {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text);
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+/* ------------------------------------------------------------------
+   LIGHT MODE
+   Keep dark-theme utility classes readable when the light theme is on.
+   These selectors are intentionally scoped to the portfolio shell.
+------------------------------------------------------------------- */
+
+[data-theme="light"] body {
+  background: var(--background);
+  color: var(--text);
+}
+
+/* Main backgrounds */
+[data-theme="light"] .portfolio-root .bg-slate-950,
+[data-theme="light"] .portfolio-root .bg-slate-900,
+[data-theme="light"] .portfolio-root .bg-slate-900\/90,
+[data-theme="light"] .portfolio-root [class~="bg-[#030712]"],
+[data-theme="light"] .portfolio-root [class~="bg-[#020617]"],
+[data-theme="light"] .portfolio-root [class~="bg-[#050816]"],
+[data-theme="light"] .portfolio-root [class~="bg-[#0f172a]"],
+[data-theme="light"] .portfolio-root [class~="bg-[#111111]"] {
+  background-color: var(--background);
+}
+
+/* Secondary surfaces and cards */
+[data-theme="light"] .portfolio-root .bg-slate-800,
+[data-theme="light"] .portfolio-root .bg-slate-800\/50,
+[data-theme="light"] .portfolio-root .bg-slate-700,
+[data-theme="light"] .portfolio-root [class~="bg-[#181818]"] {
+  background-color: var(--surface-light);
+}
+
+/* Text contrast */
+[data-theme="light"] .portfolio-root .text-white,
+[data-theme="light"] .portfolio-root .text-slate-100,
+[data-theme="light"] .portfolio-root .text-slate-200,
+[data-theme="light"] .portfolio-root .text-gray-100,
+[data-theme="light"] .portfolio-root .text-gray-200 {
+  color: var(--text);
+}
+
+[data-theme="light"] .portfolio-root .text-slate-300,
+[data-theme="light"] .portfolio-root .text-gray-300 {
+  color: var(--text-light);
+}
+
+[data-theme="light"] .portfolio-root .text-slate-400,
+[data-theme="light"] .portfolio-root .text-slate-500,
+[data-theme="light"] .portfolio-root .text-gray-400,
+[data-theme="light"] .portfolio-root .text-gray-500 {
+  color: var(--text-muted);
+}
+
+/* Borders */
+[data-theme="light"] .portfolio-root .border-slate-800,
+[data-theme="light"] .portfolio-root .border-slate-700,
+[data-theme="light"] .portfolio-root .border-slate-600,
+[data-theme="light"] .portfolio-root [class~="border-[#1f1f1f]"] {
+  border-color: var(--border);
+}
+
+/* Technology badges */
+[data-theme="light"] .portfolio-root .bg-cyan-500\/10,
+[data-theme="light"] .portfolio-root .bg-cyan-500\/20,
+[data-theme="light"] .portfolio-root .bg-emerald-400\/5 {
+  background-color: rgba(8, 145, 178, 0.08);
+}
+
+[data-theme="light"] .portfolio-root .text-cyan-300,
+[data-theme="light"] .portfolio-root .text-cyan-400,
+[data-theme="light"] .portfolio-root .text-emerald-300 {
+  color: #0e7490;
+}
+
+[data-theme="light"] .portfolio-root .border-cyan-400\/20,
+[data-theme="light"] .portfolio-root .border-cyan-400\/50 {
+  border-color: rgba(8, 145, 178, 0.3);
+}
+
+/* Cyan buttons retain strong contrast */
+[data-theme="light"] .portfolio-root .bg-cyan-500 {
+  background-color: #06b6d4;
+  color: #083344;
+}
+
+[data-theme="light"] .portfolio-root .bg-cyan-500:hover {
+  background-color: #22d3ee;
+}
+
+/* Subtle shadows for light surfaces */
+[data-theme="light"] .portfolio-root .shadow-lg,
+[data-theme="light"] .portfolio-root .shadow-xl {
+  --tw-shadow-color: rgba(15, 23, 42, 0.08);
+}
+
+/* Hero-specific contrast fixes */
+[data-theme="light"] .portfolio-root #home h1 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .portfolio-root #home h1 span {
+  color: #0e7490;
+}
+
+[data-theme="light"] .portfolio-root #home .text-white,
+[data-theme="light"] .portfolio-root #home .text-slate-100,
+[data-theme="light"] .portfolio-root #home .text-slate-900 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .portfolio-root #home .text-slate-400,
+[data-theme="light"] .portfolio-root #home .text-slate-500,
+[data-theme="light"] .portfolio-root #home .text-gray-400 {
+  color: #475569;
+}
+
+/* Fix muted-looking button styles in light mode */
+[data-theme="light"] .portfolio-root #home .bg-slate-500,
+[data-theme="light"] .portfolio-root #home .bg-slate-600,
+[data-theme="light"] .portfolio-root #home .bg-gray-500 {
+  background-color: #e2e8f0;
+}
+
+[data-theme="light"] .portfolio-root #home .bg-slate-500,
+[data-theme="light"] .portfolio-root #home .bg-slate-600 {
+  color: #0f172a;
+}
+
+/* Mobile layout safety */
+@media (max-width: 640px) {
+  .portfolio-root {
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  .portfolio-root img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .portfolio-root h1 {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+[data-theme="light"] .portfolio-root #home h1 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .portfolio-root #home h1 span {
+  color: #0e7490 !important;
+}
+
+[data-theme="light"] .portfolio-root #home .text-white {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .portfolio-root #home .text-slate-500,
+[data-theme="light"] .portfolio-root #home .text-slate-400 {
+  color: #475569 !important;
+}
