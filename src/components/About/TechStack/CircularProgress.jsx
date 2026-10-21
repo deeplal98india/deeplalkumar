@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function CircularProgress({
   percentage,
@@ -6,20 +6,9 @@ export default function CircularProgress({
   strokeWidth = 10,
   color = "#22d3ee",
 }) {
-  const reduceMotion = useReducedMotion();
+  const safePercentage = Math.min(100, Math.max(0, Number(percentage) || 0));
 
-  const safePercentage = Math.min(
-    100,
-    Math.max(0, Number(percentage) || 0)
-  );
-
-  const safeSize = Math.max(40, Number(size) || 120);
-  const safeStrokeWidth = Math.min(
-    safeSize / 2,
-    Math.max(1, Number(strokeWidth) || 10)
-  );
-
-  const radius = (safeSize - safeStrokeWidth) / 2;
+  const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
   const offset =
@@ -27,104 +16,88 @@ export default function CircularProgress({
 
   return (
     <div
-      className="relative inline-flex shrink-0 items-center justify-center"
+      className="relative flex items-center justify-center"
       style={{
-        width: safeSize,
-        height: safeSize,
+        width: size,
+        height: size,
       }}
     >
       <svg
-        width={safeSize}
-        height={safeSize}
-        viewBox={`0 0 ${safeSize} ${safeSize}`}
-        className="-rotate-90 overflow-visible"
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className="-rotate-90"
         role="img"
-        aria-label={`Skill proficiency: ${safePercentage}%`}
+        aria-label={`Skill level ${safePercentage}%`}
       >
-        {/* Background ring */}
+        {/* Background Ring */}
         <circle
-          cx={safeSize / 2}
-          cy={safeSize / 2}
+          cx={size / 2}
+          cy={size / 2}
           r={radius}
           stroke="currentColor"
-          strokeWidth={safeStrokeWidth}
-          fill="none"
+          strokeWidth={strokeWidth}
+          fill="transparent"
           className="text-slate-200 dark:text-white/10"
         />
 
-        {/* Progress ring */}
+        {/* Animated Progress Ring */}
         <motion.circle
-          cx={safeSize / 2}
-          cy={safeSize / 2}
+          cx={size / 2}
+          cy={size / 2}
           r={radius}
           stroke={color}
-          strokeWidth={safeStrokeWidth}
-          fill="none"
+          strokeWidth={strokeWidth}
+          fill="transparent"
           strokeLinecap="round"
           strokeDasharray={circumference}
-          initial={
-            reduceMotion
-              ? false
-              : { strokeDashoffset: circumference }
-          }
-          whileInView={{ strokeDashoffset: offset }}
-          viewport={{ once: true, amount: 0.3 }}
+          initial={{
+            strokeDashoffset: circumference,
+          }}
+          whileInView={{
+            strokeDashoffset: offset,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.3,
+          }}
           transition={{
-            duration: reduceMotion ? 0 : 1.4,
+            duration: 1.8,
             ease: "easeOut",
           }}
         />
-
-        {/* Subtle endpoint highlight */}
-        {safePercentage > 0 && (
-          <motion.circle
-            cx={safeSize / 2}
-            cy={safeSize / 2}
-            r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth={safeStrokeWidth}
-            strokeLinecap="round"
-            strokeDasharray={`0.5 ${circumference}`}
-            strokeDashoffset={offset}
-            initial={reduceMotion ? false : { opacity: 0 }}
-            whileInView={{ opacity: 0.7 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.4,
-              delay: reduceMotion ? 0 : 0.8,
-            }}
-            aria-hidden="true"
-          />
-        )}
       </svg>
 
-      {/* Center label */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <motion.span
-          initial={
-            reduceMotion
-              ? false
-              : { opacity: 0, scale: 0.85 }
-          }
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.4,
-            delay: reduceMotion ? 0 : 0.2,
-          }}
-          className="font-black leading-none tracking-tight text-slate-900 dark:text-white"
-          style={{
-            fontSize: safeSize >= 120 ? "1.5rem" : "1.25rem",
-          }}
+      {/* Percentage */}
+      <motion.div
+        initial={{
+          scale: 0,
+          opacity: 0,
+        }}
+        whileInView={{
+          scale: 1,
+          opacity: 1,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          delay: 0.5,
+          duration: 0.5,
+        }}
+        className="absolute text-center"
+      >
+        <h3
+          className="text-2xl font-bold text-slate-900 transition-colors duration-300 dark:text-white"
+          style={{ fontSize: size >= 120 ? "1.5rem" : "1.25rem" }}
         >
           {safePercentage}%
-        </motion.span>
+        </h3>
 
-        <span className="mt-2 text-[9px] font-semibold uppercase tracking-[2px] text-slate-500 dark:text-slate-400 sm:text-[10px]">
-          Proficiency
-        </span>
-      </div>
+        <p className="mt-1 text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 sm:text-xs">
+          Skill
+        </p>
+      </motion.div>
     </div>
   );
 }
