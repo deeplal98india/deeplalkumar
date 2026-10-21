@@ -5,7 +5,10 @@ import SkillCard from "./SkillCard";
 
 export default function TechStack() {
   return (
-    <section className="relative isolate overflow-hidden bg-slate-50 py-16 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-20 lg:py-24">
+    <section
+      id="skills"
+      className="relative isolate scroll-mt-24 overflow-hidden bg-slate-50 py-16 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-20 lg:py-24"
+    >
       {/* Background glows */}
       <div className="pointer-events-none absolute -left-10 top-10 -z-10 h-64 w-64 rounded-full bg-cyan-500/10 blur-[120px] sm:h-72 sm:w-72 sm:blur-[140px]" />
 
