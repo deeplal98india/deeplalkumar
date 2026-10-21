@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, ArrowUpRight } from "lucide-react";
+
 import { navLinks } from "./navbarData";
 import dkLogo from "../../assets/company/dkLogo.webp";
+
+const getSectionId = (href = "") => href.replace(/^#/, "").trim().toLowerCase();
 
 export default function Navbar({ theme = "dark", onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,79 +14,126 @@ export default function Navbar({ theme = "dark", onToggleTheme }) {
   const isLight = theme === "light";
 
   useEffect(() => {
-    const handleScroll = () => {
+    let animationFrame = null;
+
+    const updateNavbar = () => {
       setScrolled(window.scrollY > 16);
+
+      const headerHeight =
+        document.querySelector("header")?.getBoundingClientRect().height ?? 72;
+      const activationLine = window.scrollY + headerHeight + 100;
+
+      // Sort by actual page position, not by the order in navbarData.
+      const sections = navLinks
+        .map((item) => {
+          const id = getSectionId(item.href);
+          const element =
+            document.getElementById(id) ||
+            (id === "skills" ? document.getElementById("skill") : null);
+
+          if (!element) return null;
+
+          return {
+            id: id === "skill" ? "skills" : id,
+            top: element.getBoundingClientRect().top + window.scrollY,
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.top - b.top);
+
+      let currentId = "home";
+
+      for (const section of sections) {
+        if (section.top <= activationLine) {
+          currentId = section.id;
+        } else {
+          break;
+        }
+      }
+
+      setActiveSection(currentId);
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (animationFrame !== null) return;
 
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+      animationFrame = window.requestAnimationFrame(() => {
+        updateNavbar();
+        animationFrame = null;
+      });
+    };
 
-    const sections = document.querySelectorAll("section[id]");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-25% 0px -60% 0px",
-      }
-    );
-
-    sections.forEach((section) => observer.observe(section));
+    updateNavbar();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
+      window.removeEventListener("resize", handleScroll);
+      if (animationFrame !== null) {
+        window.cancelAnimationFrame(animationFrame);
+      }
     };
   }, []);
 
-  const closeMenu = () => setMenuOpen(false);
-
   const headerClass = isLight
     ? scrolled
-      ? "border-slate-200 bg-white/95 shadow-sm"
-      : "border-transparent bg-white/90"
+      ? "border-slate-200/80 bg-white/95 shadow-lg shadow-slate-900/[0.06]"
+      : "border-transparent bg-white/85"
     : scrolled
-      ? "border-slate-800 bg-slate-950/95 shadow-lg"
-      : "border-transparent bg-slate-950/75";
-
-  const linkClass = (sectionId) => {
-    if (activeSection === sectionId) {
-      return "text-cyan-600 dark:text-cyan-300";
-    }
-
-    return isLight
-      ? "text-slate-600 hover:text-slate-950"
-      : "text-slate-300 hover:text-white";
-  };
+      ? "border-white/10 bg-slate-950/95 shadow-lg shadow-black/20"
+      : "border-transparent bg-slate-950/80";
 
   const iconButtonClass = isLight
-    ? "border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
-    : "border-slate-700 bg-slate-900 text-slate-100 hover:bg-slate-800";
+    ? "border-slate-200 bg-white text-slate-700 hover:border-cyan-300 hover:bg-cyan-50"
+    : "border-white/10 bg-white/[0.04] text-slate-100 hover:border-cyan-400/40 hover:bg-white/[0.08]";
 
-  const toggleLabel = isLight
-    ? "Switch to dark mode"
-    : "Switch to light mode";
+  const closeMenu = () => setMenuOpen(false);
+
+  const handleNavClick = (event, href) => {
+    const id = getSectionId(href);
+    const target =
+      document.getElementById(id) ||
+      (id === "skills" ? document.getElementById("skill") : null);
+
+    // Let the browser follow the regular anchor if no target exists.
+    if (!target) {
+      closeMenu();
+      return;
+    }
+
+    event.preventDefault();
+    closeMenu();
+    setActiveSection(id);
+
+    const headerHeight =
+      document.querySelector("header")?.getBoundingClientRect().height ?? 72;
+    const top =
+      target.getBoundingClientRect().top +
+      window.scrollY -
+      headerHeight -
+      12;
+
+    window.history.replaceState(null, "", `#${target.id}`);
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  };
 
   const ThemeToggle = ({ mobile = false }) => (
     <button
       type="button"
       onClick={onToggleTheme}
-      aria-label={toggleLabel}
-      title={toggleLabel}
-      className={`inline-flex h-10 items-center justify-center gap-2 rounded-lg border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
+      aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      title={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      className={`inline-flex h-10 items-center justify-center gap-2 rounded-xl border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
         mobile ? "w-full px-3" : "w-10"
       } ${iconButtonClass}`}
     >
-      {isLight ? <Moon size={19} /> : <Sun size={19} />}
-
+      {isLight ? <Moon size={18} /> : <Sun size={18} />}
       {mobile && (
         <span className="text-sm font-medium">
           {isLight ? "Dark mode" : "Light mode"}
@@ -92,141 +142,126 @@ export default function Navbar({ theme = "dark", onToggleTheme }) {
     </button>
   );
 
+  const renderNavLink = (item, mobile = false) => {
+    const id = getSectionId(item.href);
+    const active = activeSection === id;
+
+    return (
+      <li key={item.id ?? item.href}>
+        <a
+          href={item.href}
+          onClick={(event) => handleNavClick(event, item.href)}
+          aria-current={active ? "location" : undefined}
+          className={`relative inline-flex items-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
+            mobile
+              ? "w-full rounded-xl px-4 py-3.5"
+              : "py-2"
+          } ${
+            active
+              ? isLight
+                ? "text-cyan-700"
+                : "text-cyan-300"
+              : isLight
+                ? "text-slate-600 hover:text-cyan-700"
+                : "text-slate-300 hover:text-cyan-300"
+          }`}
+        >
+          <span>{item.title}</span>
+          {active && (
+            <span
+              aria-hidden="true"
+              className={`absolute h-0.5 rounded-full ${
+                mobile ? "bottom-2 left-4 right-4" : "bottom-0 left-0 right-0"
+              } ${isLight ? "bg-cyan-600" : "bg-cyan-300"}`}
+            />
+          )}
+        </a>
+      </li>
+    );
+  };
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-colors duration-200 ${headerClass}`}
+      className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-2xl transition-colors duration-200 ${headerClass}`}
     >
-      <div className="mx-auto flex h-[72px] w-full max-w-none items-center justify-between gap-3 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
-        {/* Logo and Name */}
+      <div className="mx-auto flex h-[72px] w-full items-center justify-between gap-3 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <a
           href="#home"
-          onClick={closeMenu}
-          className="flex shrink-0 items-center gap-3"
+          onClick={(event) => handleNavClick(event, "#home")}
+          className="group flex shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
           aria-label="Deeplal Kumar home"
         >
           <img
             src={dkLogo}
-            alt=""
-            className="h-10 w-10 rounded-full border border-slate-300 object-cover dark:border-slate-700"
+            alt="Deeplal Kumar"
+            className="h-10 w-10 rounded-full border border-slate-300/80 object-cover dark:border-slate-700"
           />
-
           <span
-            className={`text-base font-semibold tracking-tight sm:text-lg ${
+            className={`text-base font-bold tracking-tight sm:text-lg ${
               isLight ? "text-slate-950" : "text-white"
             }`}
           >
-            Deeplal Kumar
-            <span className="text-cyan-500">.</span>
+            Deeplal Kumar<span className="text-cyan-500">.</span>
           </span>
         </a>
 
-        {/* Desktop Navigation */}
         <nav className="hidden lg:block" aria-label="Main navigation">
-          <ul className="flex items-center gap-7">
-            {navLinks.map((item) => {
-              const sectionId = item.href.substring(1);
-
-              return (
-                <li key={item.id ?? item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => setActiveSection(sectionId)}
-                    aria-current={
-                      activeSection === sectionId ? "location" : undefined
-                    }
-                    className={`text-sm font-medium transition-colors ${linkClass(
-                      sectionId
-                    )}`}
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              );
-            })}
+          <ul className="flex items-center gap-6 xl:gap-8">
+            {navLinks.map((item) => renderNavLink(item))}
           </ul>
         </nav>
 
-        {/* Desktop Actions */}
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-
           <a
             href="#contact"
-            className="inline-flex rounded-lg bg-cyan-500 px-4 py-2.5 text-sm font-semibold text-slate-950 transition-colors hover:bg-cyan-400"
+            onClick={(event) => handleNavClick(event, "#contact")}
+            className="inline-flex items-center gap-2 rounded-xl bg-cyan-500 px-4 py-2.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
           >
             Contact me
+            <ArrowUpRight size={16} />
           </a>
         </div>
 
-        {/* Mobile Actions */}
         <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
-
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            aria-label={
-              menuOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
-            }
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={menuOpen}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border transition-colors ${iconButtonClass}`}
+            aria-controls="mobile-navigation"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${iconButtonClass}`}
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {menuOpen && (
         <nav
-          className={`border-t px-4 py-4 lg:hidden ${
+          id="mobile-navigation"
+          className={`border-t px-4 pb-5 pt-4 sm:px-8 lg:hidden ${
             isLight
-              ? "border-slate-200 bg-white"
-              : "border-slate-800 bg-slate-950"
+              ? "border-slate-200/80 bg-white"
+              : "border-white/10 bg-slate-950"
           }`}
           aria-label="Mobile navigation"
         >
-          <ul className="w-full space-y-1">
-            {navLinks.map((item) => {
-              const sectionId = item.href.substring(1);
-
-              return (
-                <li key={item.id ?? item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => {
-                      setActiveSection(sectionId);
-                      closeMenu();
-                    }}
-                    aria-current={
-                      activeSection === sectionId ? "location" : undefined
-                    }
-                    className={`block rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
-                      activeSection === sectionId
-                        ? "bg-cyan-500/10 text-cyan-700 dark:text-cyan-300"
-                        : isLight
-                          ? "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
-                          : "text-slate-300 hover:bg-white/5 hover:text-white"
-                    }`}
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              );
-            })}
-
-            <li className="pt-2">
-              <a
-                href="#contact"
-                onClick={closeMenu}
-                className="block rounded-lg bg-cyan-500 px-3 py-3 text-center text-sm font-semibold text-slate-950 hover:bg-cyan-400"
-              >
-                Contact me
-              </a>
-            </li>
+          <ul className="space-y-1.5">
+            {navLinks.map((item) => renderNavLink(item, true))}
           </ul>
+
+          <div className="mt-4 border-t border-slate-500/15 pt-4">
+            <a
+              href="#contact"
+              onClick={(event) => handleNavClick(event, "#contact")}
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 px-4 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+            >
+              Contact me
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
         </nav>
       )}
     </header>

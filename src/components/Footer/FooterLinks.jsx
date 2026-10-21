@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-
 import { quickLinks } from "./footerData";
 
 export default function FooterLinks() {
@@ -8,184 +7,86 @@ export default function FooterLinks() {
 
   return (
     <motion.div
-      initial={
-        shouldReduceMotion
-          ? false
-          : {
-              opacity: 0,
-              y: 40,
-            }
-      }
-      whileInView={
-        shouldReduceMotion
-          ? {}
-          : {
-              opacity: 1,
-              y: 0,
-            }
-      }
-      viewport={{ once: true }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{
-        duration: 0.7,
-        delay: 0.15,
+        duration: shouldReduceMotion ? 0 : 0.45,
+        ease: "easeOut",
       }}
-      className="relative"
+      className="relative min-w-0"
     >
       {/* Heading */}
-      <div className="relative mb-10">
-        {/* Accent Line */}
-        <div className="mb-5 flex items-center gap-3">
-          <span className="h-[3px] w-14 rounded-full bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-500 dark:from-cyan-400" />
+      <div className="mb-7">
+        <div className="mb-3 flex items-center gap-3">
+          <span className="h-1 w-9 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 dark:from-cyan-400" />
 
-          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-700 dark:text-cyan-300">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">
             Navigation
           </span>
         </div>
 
-        {/* Title */}
-        <h3 className="bg-gradient-to-r from-slate-900 via-slate-700 to-cyan-700 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-white dark:via-slate-100 dark:to-cyan-300">
+        <h3 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           Quick Links
         </h3>
 
-        {/* Description */}
-        <p className="mt-3 max-w-sm text-[15px] leading-7 text-slate-600 dark:text-slate-400">
-          Explore different sections of my portfolio and discover my work,
-          skills, experience, and contact information.
+        <p className="mt-3 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+          Explore my portfolio, technical skills, experience and projects.
         </p>
       </div>
 
-      {/* Quick Links */}
-      <div className="space-y-4">
-        {quickLinks.map((link, index) => (
-          <motion.a
-            key={link.title}
-            href={link.href}
-            whileHover={
-              shouldReduceMotion
-                ? {}
-                : {
-                    x: 6,
-                  }
-            }
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 18,
-            }}
-            className="
-              group relative flex items-center justify-between
-              overflow-hidden rounded-2xl border
-              border-slate-200 bg-gradient-to-br
-              from-white via-slate-50 to-slate-100
-              px-5 py-5 shadow-sm backdrop-blur-2xl
-              transition-all duration-500
-              hover:border-cyan-500/40
-              hover:shadow-[0_15px_40px_rgba(34,211,238,.12)]
-              focus-visible:outline-none focus-visible:ring-2
-              focus-visible:ring-cyan-500
-              dark:border-white/10 dark:from-slate-900
-              dark:via-[#0b1220] dark:to-slate-950
-              dark:hover:border-cyan-400/40
-              dark:hover:shadow-[0_15px_40px_rgba(34,211,238,.18)]
-              sm:px-6
-            "
-          >
-            {/* Left Accent */}
-            <div
-              className="
-                absolute left-0 top-0 h-full w-1 origin-top
-                scale-y-0 rounded-full
-                bg-gradient-to-b from-cyan-500 via-sky-400 to-indigo-500
-                transition-transform duration-500
-                group-hover:scale-y-100
-                dark:from-cyan-400
-              "
-            />
-
-            {/* Glow */}
-            <div
-              className="
-                absolute -left-10 top-1/2 h-20 w-20
-                -translate-y-1/2 rounded-full bg-cyan-400/10
-                blur-2xl opacity-0 transition-all duration-500
-                group-hover:left-2 group-hover:opacity-100
-                dark:bg-cyan-400/20
-              "
-            />
-
-            {/* Shine */}
-            <span
-              className="
-                absolute -left-20 top-0 h-full w-16 rotate-12
-                bg-gradient-to-r from-transparent via-cyan-900/5 to-transparent
-                transition-all duration-700
-                group-hover:left-[140%]
-                dark:via-white/15
-              "
-            />
-
-            {/* Link Content */}
-            <div className="relative z-10 flex min-w-0 items-center gap-4">
-              {/* Number */}
-              <span
-                className="
-                  shrink-0 text-sm font-bold text-slate-400
-                  transition-colors duration-300
-                  group-hover:text-cyan-700
-                  dark:text-slate-600 dark:group-hover:text-cyan-400
-                "
+      {/* Navigation links */}
+      <nav aria-label="Footer navigation">
+        <ul className="space-y-2.5">
+          {quickLinks.map((link, index) => (
+            <li key={link.title}>
+              <motion.a
+                href={link.href}
+                whileHover={shouldReduceMotion ? undefined : { x: 4 }}
+                transition={{
+                  duration: shouldReduceMotion ? 0 : 0.2,
+                  ease: "easeOut",
+                }}
+                className="group relative flex min-h-14 items-center justify-between gap-3 overflow-hidden rounded-xl border border-slate-200/80 bg-white/80 px-4 py-3 transition-colors duration-200 hover:border-cyan-500/40 hover:bg-cyan-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-cyan-400/30 dark:hover:bg-cyan-400/[0.05] dark:focus-visible:ring-offset-slate-950 sm:px-4"
               >
-                {(index + 1).toString().padStart(2, "0")}
-              </span>
+                {/* Hover accent */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-y-0 left-0 w-0.5 origin-center scale-y-0 bg-gradient-to-b from-cyan-500 to-violet-500 transition-transform duration-200 group-hover:scale-y-100 motion-reduce:transition-none dark:from-cyan-400"
+                />
 
-              {/* Title */}
-              <span
-                className="
-                  text-sm font-medium tracking-wide text-slate-700
-                  transition-colors duration-300
-                  group-hover:text-cyan-800
-                  dark:text-slate-300 dark:group-hover:text-white
-                  sm:text-[15px]
-                "
-              >
-                {link.title}
-              </span>
-            </div>
+                {/* Link title */}
+                <span className="relative flex min-w-0 items-center gap-3">
+                  <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-slate-400 transition-colors group-hover:text-cyan-700 dark:text-slate-500 dark:group-hover:text-cyan-300">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
 
-            {/* Arrow */}
-            <div
-              className="
-                relative z-10 ml-3 flex h-10 w-10 shrink-0
-                items-center justify-center rounded-full border
-                border-slate-200 bg-white
-                transition-all duration-500
-                group-hover:border-cyan-500/50
-                group-hover:bg-cyan-50
-                group-hover:shadow-[0_0_20px_rgba(34,211,238,.15)]
-                dark:border-white/10 dark:bg-white/5
-                dark:group-hover:border-cyan-400/50
-                dark:group-hover:bg-cyan-500/15
-                dark:group-hover:shadow-[0_0_20px_rgba(34,211,238,.25)]
-              "
-            >
-              <ChevronRight
-                size={18}
-                className="
-                  text-cyan-700 transition-transform duration-500
-                  group-hover:translate-x-1
-                  dark:text-cyan-400
-                "
-              />
-            </div>
-          </motion.a>
-        ))}
-      </div>
+                  <span className="break-words text-sm font-medium text-slate-700 transition-colors group-hover:text-cyan-800 dark:text-slate-300 dark:group-hover:text-white sm:text-[15px]">
+                    {link.title}
+                  </span>
+                </span>
 
-      {/* Bottom Accent */}
-      <div className="mt-10 flex items-center gap-3">
-        <span className="h-[4px] w-24 rounded-full bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-500 dark:from-cyan-400" />
+                {/* Arrow */}
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500 transition-all duration-200 group-hover:border-cyan-500/30 group-hover:bg-cyan-100 group-hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400 dark:group-hover:border-cyan-400/30 dark:group-hover:bg-cyan-400/10 dark:group-hover:text-cyan-300">
+                  <ChevronRight
+                    size={17}
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </motion.a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-        <span className="h-[4px] w-10 rounded-full bg-cyan-600/30 dark:bg-cyan-400/40" />
+      {/* Bottom accent */}
+      <div
+        aria-hidden="true"
+        className="mt-7 flex items-center gap-2.5"
+      >
+        <span className="h-1 w-12 rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 dark:from-cyan-400" />
+        <span className="h-1 w-5 rounded-full bg-violet-500/30 dark:bg-violet-400/40" />
       </div>
     </motion.div>
   );
