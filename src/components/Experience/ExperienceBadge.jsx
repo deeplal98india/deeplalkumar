@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import {
   FaReact,
@@ -22,73 +22,76 @@ import {
 } from "react-icons/si";
 
 const iconMap = {
-  React: { Icon: FaReact, color: "text-sky-500 dark:text-sky-400" },
-  "React.js": { Icon: FaReact, color: "text-sky-500 dark:text-sky-400" },
+  React: <FaReact className="text-sky-400" />,
+  "React.js": <FaReact className="text-sky-400" />,
 
-  Node: { Icon: FaNodeJs, color: "text-green-600 dark:text-green-400" },
-  "Node.js": { Icon: FaNodeJs, color: "text-green-600 dark:text-green-400" },
+  Node: <FaNodeJs className="text-green-500" />,
+  "Node.js": <FaNodeJs className="text-green-500" />,
 
-  Express: { Icon: SiExpress, color: "text-slate-600 dark:text-slate-300" },
-  "Express.js": { Icon: SiExpress, color: "text-slate-600 dark:text-slate-300" },
+  Express: (
+    <SiExpress className="text-gray-500 dark:text-gray-300" />
+  ),
+  "Express.js": (
+    <SiExpress className="text-gray-500 dark:text-gray-300" />
+  ),
 
-  MongoDB: { Icon: SiMongodb, color: "text-green-600 dark:text-green-400" },
-  Mongoose: { Icon: SiMongoose, color: "text-red-500 dark:text-red-400" },
+  MongoDB: (
+    <SiMongodb className="text-green-500 dark:text-green-400" />
+  ),
+  Mongoose: <SiMongoose className="text-red-400" />,
 
-  JavaScript: { Icon: FaJsSquare, color: "text-yellow-500 dark:text-yellow-400" },
+  JavaScript: <FaJsSquare className="text-yellow-400" />,
 
-  HTML: { Icon: FaHtml5, color: "text-orange-600 dark:text-orange-400" },
-  HTML5: { Icon: FaHtml5, color: "text-orange-600 dark:text-orange-400" },
+  HTML: <FaHtml5 className="text-orange-500" />,
+  HTML5: <FaHtml5 className="text-orange-500" />,
 
-  CSS: { Icon: FaCss3Alt, color: "text-blue-600 dark:text-blue-400" },
-  CSS3: { Icon: FaCss3Alt, color: "text-blue-600 dark:text-blue-400" },
+  CSS: <FaCss3Alt className="text-blue-500" />,
+  CSS3: <FaCss3Alt className="text-blue-500" />,
 
-  Tailwind: { Icon: SiTailwindcss, color: "text-cyan-600 dark:text-cyan-400" },
-  "Tailwind CSS": { Icon: SiTailwindcss, color: "text-cyan-600 dark:text-cyan-400" },
+  Tailwind: (
+    <SiTailwindcss className="text-cyan-500 dark:text-cyan-400" />
+  ),
+  "Tailwind CSS": (
+    <SiTailwindcss className="text-cyan-500 dark:text-cyan-400" />
+  ),
 
-  Git: { Icon: FaGitAlt, color: "text-orange-600 dark:text-orange-400" },
-  GitHub: { Icon: FaGithub, color: "text-slate-800 dark:text-white" },
+  Git: <FaGitAlt className="text-orange-500" />,
+  GitHub: <FaGithub className="text-slate-800 dark:text-white" />,
 
-  Axios: { Icon: SiAxios, color: "text-violet-600 dark:text-violet-400" },
-  JWT: { Icon: FaKey, color: "text-pink-600 dark:text-pink-400" },
+  Axios: (
+    <SiAxios className="text-violet-500 dark:text-violet-400" />
+  ),
 
-  Postman: { Icon: SiPostman, color: "text-orange-600 dark:text-orange-400" },
-  "VS Code": { Icon: SiVisualstudiocode, color: "text-blue-600 dark:text-blue-400" },
+  JWT: <FaKey className="text-pink-500 dark:text-pink-400" />,
+
+  "REST API": (
+    <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400">
+      API
+    </span>
+  ),
+
+  Postman: <SiPostman className="text-orange-500" />,
+
+  "VS Code": <SiVisualstudiocode className="text-blue-500" />,
 };
 
 const ExperienceBadge = ({ tech }) => {
-  const shouldReduceMotion = useReducedMotion();
-  const technology = iconMap[tech];
-  const Icon = technology?.Icon;
-  const iconColor = technology?.color;
-
   return (
     <motion.div
-      whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.2,
-        ease: "easeOut",
+      whileHover={{
+        y: -4,
+        scale: 1.05,
       }}
-      className="group inline-flex min-w-0 max-w-full items-center gap-2 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-2 shadow-sm transition-[border-color,background-color,box-shadow] duration-200 hover:border-cyan-500/40 hover:bg-cyan-50/80 hover:shadow-[0_4px_16px_rgba(8,145,178,0.10)] motion-reduce:transform-none motion-reduce:transition-none dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-cyan-400/30 dark:hover:bg-cyan-400/[0.06] dark:hover:shadow-[0_4px_16px_rgba(34,211,238,0.10)]"
+      transition={{
+        duration: 0.25,
+      }}
+      className="group flex min-w-0 items-center gap-2 rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] dark:border-[#2a2a2a] dark:bg-[#111111]/90 dark:text-slate-200 dark:hover:border-cyan-400 dark:hover:bg-cyan-500/10 dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.25)]"
     >
-      {/* Technology icon */}
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center">
-        {Icon ? (
-          <Icon
-            aria-hidden="true"
-            className={`text-lg ${iconColor}`}
-          />
-        ) : (
-          <span aria-hidden="true" className="text-base">
-            💻
-          </span>
-        )}
+      <span className="shrink-0 text-lg">
+        {iconMap[tech] || "💻"}
       </span>
 
-      {/* Technology name */}
-      <span className="min-w-0 break-words text-xs font-semibold leading-5 text-slate-700 transition-colors group-hover:text-cyan-800 dark:text-slate-200 dark:group-hover:text-cyan-300 sm:text-sm">
-        {tech}
-      </span>
+      <span className="break-words">{tech}</span>
     </motion.div>
   );
 };
