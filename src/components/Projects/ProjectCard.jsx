@@ -14,17 +14,27 @@ export default function ProjectCard({ project, index = 0 }) {
 
   if (!project) return null;
 
-  const hasGithub = Boolean(
-    project.github && project.github !== "#"
-  );
+  // Match the camelCase properties used in projects.js
+  const {
+    title,
+    subtitle,
+    category,
+    image,
+    imageAlt,
+    description,
+    problem,
+    solution,
+    contribution,
+    features = [],
+    tech = [],
+    github,
+    live,
+  } = project;
 
-  const hasLive = Boolean(
-    project.live && project.live !== "#"
-  );
+  const hasGithub = Boolean(github && github !== "#");
+  const hasLive = Boolean(live && live !== "#");
 
-  const hasCaseStudy = Boolean(
-    project.problem || project.solution || project.contribution
-  );
+  const hasCaseStudy = Boolean(problem || solution || contribution);
 
   const descriptionClass =
     "text-sm leading-6 text-slate-600 dark:text-slate-400";
@@ -32,18 +42,22 @@ export default function ProjectCard({ project, index = 0 }) {
   const caseStudyHeadingClass =
     "text-sm font-bold text-slate-900 dark:text-white";
 
+  const cardAnimation = shouldReduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.12 },
+        transition: {
+          duration: 0.4,
+          delay: Math.min(index * 0.06, 0.24),
+          ease: "easeOut",
+        },
+      };
+
   return (
     <motion.article
-      initial={
-        shouldReduceMotion ? false : { opacity: 0, y: 20 }
-      }
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.4,
-        delay: shouldReduceMotion ? 0 : Math.min(index * 0.06, 0.24),
-        ease: "easeOut",
-      }}
+      {...cardAnimation}
       className="group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl hover:shadow-slate-900/[0.07] dark:border-white/[0.09] dark:bg-[#10141E] dark:shadow-none dark:hover:border-cyan-400/30 dark:hover:shadow-cyan-950/20"
     >
       {/* Top accent */}
@@ -51,13 +65,10 @@ export default function ProjectCard({ project, index = 0 }) {
 
       {/* Project image */}
       <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-900">
-        {project.image ? (
+        {image ? (
           <img
-            src={project.image}
-            alt={
-              project.imageAlt ??
-              `${project.title ?? "Project"} project preview`
-            }
+            src={image}
+            alt={imageAlt ?? `${title ?? "Project"} project preview`}
             loading="lazy"
             decoding="async"
             width={700}
@@ -81,18 +92,18 @@ export default function ProjectCard({ project, index = 0 }) {
         {/* Image overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-slate-950/[0.04] opacity-60 transition-opacity duration-300 group-hover:opacity-100" />
 
-        {project.category && (
+        {category && (
           <span className="absolute left-4 top-4 inline-flex max-w-[calc(100%-2rem)] items-center gap-1.5 truncate rounded-lg border border-white/60 bg-white/90 px-3 py-1.5 text-xs font-bold text-slate-800 shadow-sm backdrop-blur-md dark:border-white/15 dark:bg-slate-950/80 dark:text-slate-100">
-            {project.category}
+            {category}
           </span>
         )}
 
         {hasLive && (
           <a
-            href={project.live}
+            href={live}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`View ${project.title} live demo`}
+            aria-label={`View ${title} live demo`}
             className="absolute bottom-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 bg-slate-950/65 text-white opacity-100 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-cyan-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-within:translate-y-0 sm:group-focus-within:opacity-100"
           >
             <ArrowUpRight className="h-5 w-5" />
@@ -102,36 +113,54 @@ export default function ProjectCard({ project, index = 0 }) {
 
       {/* Project details */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        {project.subtitle && (
+        {subtitle && (
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-cyan-700 dark:text-cyan-400">
-            {project.subtitle}
+            {subtitle}
           </p>
         )}
 
         <h3 className="mt-2 text-lg font-bold leading-snug tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-cyan-800 dark:text-white dark:group-hover:text-cyan-300 sm:text-xl">
-          {project.title}
+          {title}
         </h3>
 
-        {project.description && (
-          <p className={`mt-3 ${descriptionClass}`}>
-            {project.description}
-          </p>
+        {description && (
+          <p className={`mt-3 ${descriptionClass}`}>{description}</p>
+        )}
+
+        {/* Project features */}
+        {features.length > 0 && (
+          <div className="mt-4">
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-500">
+              Key Features
+            </p>
+
+            <ul className="flex flex-wrap gap-2">
+              {features.map((feature) => (
+                <li
+                  key={feature}
+                  className="inline-flex items-center rounded-lg border border-cyan-200/80 bg-cyan-50/70 px-2.5 py-1.5 text-xs font-medium text-cyan-800 dark:border-cyan-400/15 dark:bg-cyan-400/[0.05] dark:text-cyan-300"
+                >
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {/* Technologies */}
-        {project.tech?.length > 0 && (
+        {tech.length > 0 && (
           <div className="mt-5">
             <p className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-500">
               Technologies
             </p>
 
             <div className="flex flex-wrap gap-2">
-              {project.tech.map((tech) => (
+              {tech.map((technology) => (
                 <span
-                  key={tech}
+                  key={technology}
                   className="inline-flex items-center rounded-lg border border-slate-200/90 bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-700 transition-colors duration-200 hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/[0.09] dark:bg-white/[0.035] dark:text-slate-300 dark:hover:border-cyan-400/20 dark:hover:bg-cyan-400/[0.06] dark:hover:text-cyan-300"
                 >
-                  {tech}
+                  {technology}
                 </span>
               ))}
             </div>
@@ -143,10 +172,10 @@ export default function ProjectCard({ project, index = 0 }) {
           <div className="flex flex-wrap items-center gap-2.5">
             {hasLive && (
               <a
-                href={project.live}
+                href={live}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${project.title} live demo`}
+                aria-label={`Open ${title} live demo`}
                 className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 to-sky-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm shadow-cyan-700/15 transition-all duration-200 hover:-translate-y-0.5 hover:from-cyan-700 hover:to-sky-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:from-cyan-400 dark:to-sky-400 dark:text-slate-950 dark:hover:from-cyan-300 dark:hover:to-sky-300 dark:focus-visible:ring-offset-[#10141E]"
               >
                 Live Demo
@@ -156,10 +185,10 @@ export default function ProjectCard({ project, index = 0 }) {
 
             {hasGithub && (
               <a
-                href={project.github}
+                href={github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${project.title} GitHub repository`}
+                aria-label={`Open ${title} GitHub repository`}
                 className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-300/90 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:border-white/15 dark:bg-white/[0.035] dark:text-slate-200 dark:hover:border-white/25 dark:hover:bg-white/[0.07] dark:focus-visible:ring-offset-[#10141E]"
               >
                 <FaGithub size={17} />
@@ -179,9 +208,7 @@ export default function ProjectCard({ project, index = 0 }) {
             <div className="mt-5 border-t border-slate-200/80 pt-4 dark:border-white/[0.09]">
               <button
                 type="button"
-                onClick={() =>
-                  setShowCaseStudy((value) => !value)
-                }
+                onClick={() => setShowCaseStudy((value) => !value)}
                 aria-expanded={showCaseStudy}
                 className="flex min-h-9 w-full items-center justify-between gap-3 rounded-lg text-left text-sm font-semibold text-slate-700 transition-colors hover:text-cyan-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:text-slate-300 dark:hover:text-cyan-300 dark:focus-visible:ring-offset-[#10141E]"
               >
@@ -199,35 +226,31 @@ export default function ProjectCard({ project, index = 0 }) {
 
               {showCaseStudy && (
                 <div className="mt-4 space-y-4 border-l-2 border-cyan-500/30 pl-4">
-                  {project.problem && (
+                  {problem && (
                     <div>
-                      <h4 className={caseStudyHeadingClass}>
-                        The Problem
-                      </h4>
+                      <h4 className={caseStudyHeadingClass}>The Problem</h4>
                       <p className={`mt-1.5 ${descriptionClass}`}>
-                        {project.problem}
+                        {problem}
                       </p>
                     </div>
                   )}
 
-                  {project.solution && (
+                  {solution && (
                     <div>
-                      <h4 className={caseStudyHeadingClass}>
-                        The Solution
-                      </h4>
+                      <h4 className={caseStudyHeadingClass}>The Solution</h4>
                       <p className={`mt-1.5 ${descriptionClass}`}>
-                        {project.solution}
+                        {solution}
                       </p>
                     </div>
                   )}
 
-                  {project.contribution && (
+                  {contribution && (
                     <div>
                       <h4 className={caseStudyHeadingClass}>
                         My Contribution
                       </h4>
                       <p className={`mt-1.5 ${descriptionClass}`}>
-                        {project.contribution}
+                        {contribution}
                       </p>
                     </div>
                   )}

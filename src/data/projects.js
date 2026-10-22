@@ -1,10 +1,10 @@
-
 import immaculate from "../assets/images/immaculate.webp";
 import portfolio from "../assets/images/portfolio.webp";
 import taskManagement from "../assets/images/taskManagement.webp";
 import school from "../assets/images/school.webp";
 import Responsive_Admin_Dashboard from "../assets/images/Responsive_Admin_Dashboard.webp";
 import Landing_Page from "../assets/images/Landing_Page.webp";
+import bookStore from "../assets/images/bookStore.webp";
 
 export const projects = Object.freeze([
   {
@@ -33,6 +33,7 @@ export const projects = Object.freeze([
     github: "",
     live: "",
   },
+
   {
     id: 2,
     title: "Task Management System",
@@ -59,6 +60,7 @@ export const projects = Object.freeze([
     github: "",
     live: "",
   },
+
   {
     id: 3,
     title: "Developer Portfolio",
@@ -85,6 +87,7 @@ export const projects = Object.freeze([
     github: "",
     live: "",
   },
+
   {
     id: 4,
     title: "School Attendance Management",
@@ -111,6 +114,7 @@ export const projects = Object.freeze([
     github: "",
     live: "",
   },
+
   {
     id: 5,
     title: "Responsive Admin Dashboard",
@@ -137,6 +141,7 @@ export const projects = Object.freeze([
     github: "",
     live: "",
   },
+
   {
     id: 6,
     title: "Business Landing Page",
@@ -160,6 +165,42 @@ export const projects = Object.freeze([
       "Clear Calls to Action",
     ],
     tech: ["React", "Tailwind CSS", "Framer Motion"],
+    github: "",
+    live: "",
+  },
+
+  {
+    id: 7,
+    title: "BookStore Application",
+    subtitle: "Full-Stack Application",
+    category: "Full Stack",
+    featured: false,
+    image: bookStore,
+    imageAlt:
+      "BookStore application dashboard showing book inventory and book management",
+    description:
+      "A full-stack bookstore application with a book catalogue, book management features, backend APIs and an admin dashboard for managing book listings and pricing.",
+    problem:
+      "Managing book listings, categories and pricing requires a centralized interface and reliable backend APIs.",
+    solution:
+      "Developed a bookstore application using React.js, Node.js, Express.js and MongoDB to organize book data and provide an admin interface for book management.",
+    contribution:
+      "Implemented frontend components and backend REST APIs for book-related functionality, following a modular controller and service architecture.",
+    features: [
+      "Book Catalogue",
+      "Book Management",
+      "REST API Integration",
+      "MongoDB Data Storage",
+      "Admin Dashboard",
+    ],
+    tech: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose",
+      "Tailwind CSS",
+    ],
     github: "",
     live: "",
   },

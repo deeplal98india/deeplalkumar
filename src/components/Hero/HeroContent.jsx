@@ -62,7 +62,7 @@ export default function HeroContent() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50 motion-reduce:animate-none" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 dark:bg-emerald-400" />
         </span>
-        Available for freelance projects
+        Available for Freelance & Full-Time Opportunities
         <Sparkles size={14} className="ml-0.5 opacity-70" />
       </div>
 

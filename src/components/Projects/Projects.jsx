@@ -9,13 +9,14 @@ import ProjectCard from "./ProjectCard";
 export default function Projects() {
   const shouldReduceMotion = useReducedMotion();
 
+  // Keep project lists in sync with the projects data.
   const featuredProjects = useMemo(
-    () => projects.filter((project) => project.featured),
+    () => projects.filter((project) => project.featured === true),
     []
   );
 
   const normalProjects = useMemo(
-    () => projects.filter((project) => !project.featured),
+    () => projects.filter((project) => project.featured !== true),
     []
   );
 
@@ -40,6 +41,7 @@ export default function Projects() {
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
         <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-cyan-400/[0.08] blur-3xl dark:bg-cyan-500/[0.08]" />
+
         <div className="absolute -right-40 top-[35%] h-96 w-96 rounded-full bg-violet-400/[0.08] blur-3xl dark:bg-violet-500/[0.08]" />
 
         <div
@@ -113,9 +115,9 @@ export default function Projects() {
               </div>
             </motion.div>
 
-            {featuredProjects.map((project) => (
+            {featuredProjects.map((project, index) => (
               <FeaturedProject
-                key={project._id ?? project.id ?? project.title}
+                key={project.id ?? project._id ?? `${project.title}-${index}`}
                 project={project}
               />
             ))}
@@ -124,7 +126,11 @@ export default function Projects() {
 
         {/* Other projects */}
         {normalProjects.length > 0 && (
-          <div className={featuredProjects.length > 0 ? "mt-12 sm:mt-16" : ""}>
+          <div
+            className={
+              featuredProjects.length > 0 ? "mt-12 sm:mt-16" : ""
+            }
+          >
             <motion.div
               {...revealAnimation}
               className="mb-5 flex items-center gap-3 sm:mb-6"
@@ -144,7 +150,7 @@ export default function Projects() {
             <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {normalProjects.map((project, index) => (
                 <ProjectCard
-                  key={project._id ?? project.id ?? project.title}
+                  key={project.id ?? project._id ?? `${project.title}-${index}`}
                   project={project}
                   index={index}
                 />
