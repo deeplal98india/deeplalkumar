@@ -8,6 +8,9 @@ import Contact from "./components/Contact/Contact";
 import Experience from "./components/Experience/Experience";
 import Footer from "./components/Footer/Footer";
 import BackgroundEffects from "./components/Hero/BackgroundEffects";
+import GitHubActivity from "./components/GitHubActivity/GitHubActivity";
+import Testimonials from "./components/Testimonials/Testimonials";
+import InteractiveTerminal from "./components/InteractiveTerminal/InteractiveTerminal";
 
 const THEME_KEY = "portfolio-theme";
 
@@ -59,6 +62,9 @@ export default function App() {
           <About />
           <Experience />
           <Projects />
+          <GitHubActivity />
+          <InteractiveTerminal />
+          <Testimonials />
           <Contact />
         </main>
 
