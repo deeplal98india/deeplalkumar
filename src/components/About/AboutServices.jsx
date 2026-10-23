@@ -154,7 +154,7 @@ export default function AboutServices() {
     <AnimatePresence>
       {selectedService && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto overscroll-contain bg-slate-950/75 p-3 backdrop-blur-sm sm:p-6"
+          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden overscroll-none bg-slate-950/75 p-3 backdrop-blur-md sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -173,7 +173,7 @@ export default function AboutServices() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: shouldReduceMotion ? 0 : 0.22 }}
-            className="relative my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-xl overflow-y-auto overscroll-contain rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900 sm:max-h-[calc(100dvh-3rem)]"
+            className="relative my-auto max-h-[calc(100vh-1.5rem)] max-h-[calc(100dvh-1.5rem)] w-full max-w-xl overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_24px_80px_-20px_rgba(0,0,0,0.45)] dark:border-slate-700 dark:bg-slate-900 sm:max-h-[calc(100vh-3rem)] sm:max-h-[calc(100dvh-3rem)]"
             onMouseDown={(event) => event.stopPropagation()}
           >
             <div className="sticky top-0 z-10 h-1 w-full" style={{ backgroundColor: selectedService.color }} />
@@ -246,7 +246,7 @@ export default function AboutServices() {
                 onClick={() => setSelectedService(null)}
                 className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-600 px-5 py-3 text-sm font-bold text-white transition-all hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
               >
-                Close Details 
+                Close Details <FiX size={16} aria-hidden="true" />
               </button>
             </div>
           </motion.div>
